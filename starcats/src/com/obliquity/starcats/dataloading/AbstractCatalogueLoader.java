@@ -174,13 +174,17 @@ public abstract class AbstractCatalogueLoader {
 		
 		String secondField = secondStartPos > 0 ? getField(line, secondStartPos, secondEndPos) : null;
 		
-		double value = Double.parseDouble(degreeField) + Double.parseDouble(minuteField)/60.0 +
-				(secondField == null ? 0.0 : Double.parseDouble(secondField)/3600.0);
+		if (degreeField != null && minuteField != null) {
+			double value = Double.parseDouble(degreeField) + Double.parseDouble(minuteField)/60.0 +
+					(secondField == null ? 0.0 : Double.parseDouble(secondField)/3600.0);
 		
-		if (signumField != null && signumField.equalsIgnoreCase("-"))
-			value = - value;
+			if (signumField != null && signumField.equalsIgnoreCase("-"))
+				value = -value;
 		
-		stmt.setDouble(index, value);
+			stmt.setDouble(index, value);
+		} else {
+			stmt.setNull(index, java.sql.Types.DOUBLE);
+		}
 	}
 	
 	private String getField(String line, int startPos, int endPos) {
