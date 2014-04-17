@@ -166,7 +166,7 @@ public abstract class AbstractCatalogueLoader {
 	protected void setDoubleColumnFromDMS(PreparedStatement stmt, int index, String line, int signumPos,
 			int degreeStartPos, int degreeEndPos, int minuteStartPos, int minuteEndPos, int secondStartPos, int secondEndPos)
 			throws SQLException {
-		String signumField = signumPos > 0 ? getField(line, signumPos, signumPos + 1) : null;
+		String signumField = signumPos > 0 ? getField(line, signumPos, signumPos) : null;
 		
 		String degreeField = getField(line, degreeStartPos, degreeEndPos);
 		
