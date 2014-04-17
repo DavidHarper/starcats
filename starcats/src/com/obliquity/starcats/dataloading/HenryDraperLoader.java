@@ -42,15 +42,17 @@ public class HenryDraperLoader extends AbstractCatalogueLoader {
 		
 		double pv_mag = getFieldAsDouble(line, 30, 34);
 		
-		stmtInsertRow.setDouble(5, pv_mag);
+		if (Double.isNaN(pv_mag))
+			stmtInsertRow.setNull(5, java.sql.Types.DOUBLE);
+		else
+			stmtInsertRow.setDouble(5, pv_mag);
 		
 		double pt_mag =  getFieldAsDouble(line, 37, 41);
 		
-		if (pt_mag == Double.NaN || (pt_mag == 0.0 && pv_mag > 6.0)) {
+		if (Double.isNaN(pt_mag) || (pt_mag == 0.0 && pv_mag > 6.0))
 			stmtInsertRow.setNull(6, java.sql.Types.DOUBLE);
-		} else {
+		else
 			stmtInsertRow.setDouble(6, pt_mag);
-		}
 		
 		setStringColumn(stmtInsertRow, 7, line, 43, 45);      // Spectral type
 
