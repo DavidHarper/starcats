@@ -39,14 +39,17 @@ public class HenryDraperLoader extends AbstractCatalogueLoader {
 		stmtInsertRow.setDouble(3, raHours+raDeciMinutes/600.0);
 		
 		setDoubleColumnFromDMS(stmtInsertRow, 4, line, 24, 25, 26, 27, 28, -1, -1);      // Dec
-
-		setDoubleColumn(stmtInsertRow, 5, line, 30, 34);      // Photovisual magnitude
-
-		try {
-			setDoubleColumn(stmtInsertRow, 6, line, 37, 41);      // Photographic magnitude
-		}
-		catch (NumberFormatException e) {
-			System.err.println("Bad photovisual magnitude");
+		
+		double pv_mag = getFieldAsDouble(line, 30, 34);
+		
+		stmtInsertRow.setDouble(5, pv_mag);
+		
+		double pt_mag =  getFieldAsDouble(line, 37, 41);
+		
+		if (pt_mag == Double.NaN || (pt_mag == 0.0 && pv_mag > 6.0)) {
+			stmtInsertRow.setNull(6, java.sql.Types.DOUBLE);
+		} else {
+			stmtInsertRow.setDouble(6, pt_mag);
 		}
 		
 		setStringColumn(stmtInsertRow, 7, line, 43, 45);      // Spectral type
