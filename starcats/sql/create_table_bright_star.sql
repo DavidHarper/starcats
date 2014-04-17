@@ -1,0 +1,22 @@
+create table bright_star (
+    bs_id smallint unsigned not null primary key,
+    name varchar(10),
+    dm_id varchar(11),
+    hd_id int unsigned,
+    sao_id int unsigned,
+    fk5_id smallint unsigned,
+    ra double not null,
+    `dec` double not null,
+    v_mag float,
+    colour_BV float,
+    colour_UB float,
+    colour_RI float,
+    spectral_type varchar(20),
+    pm_ra float,
+    pm_dec float,
+    parallax float,
+    radial_velocity float,
+    key (hd_id),
+    key (ra),
+    key (v_mag)
+) engine=InnoDB
