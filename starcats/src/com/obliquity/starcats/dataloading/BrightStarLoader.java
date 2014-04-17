@@ -33,7 +33,7 @@ public class BrightStarLoader extends AbstractCatalogueLoader {
 	protected void processLine(String line) throws SQLException {
 		setIntegerColumn(stmtInsertRow, 1, line, 1, 4);  // bs_id
 		
-		setStringColumn(stmtInsertRow, 2, line, 5, 4);  // name
+		setStringColumn(stmtInsertRow, 2, line, 5, 14);  // name
 
 		setStringColumn(stmtInsertRow, 3, line, 15, 25); // dm_id
 		
