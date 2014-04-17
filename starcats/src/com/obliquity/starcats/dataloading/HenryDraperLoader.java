@@ -28,18 +28,24 @@ public class HenryDraperLoader extends AbstractCatalogueLoader {
 	}
 
 	protected void processLine(String line) throws SQLException {
-		setIntegerColumn(stmtInsertRow, 1, line, 1, 6);       // HD number
+		// Henry Draper catalgue number 
+		setIntegerColumn(stmtInsertRow, 1, line, 1, 6);
 		
-		setStringColumn(stmtInsertRow, 2, line, 7, 18);       // Durchmusterung identifier
+		// Identifier in the Durchmusterung catalogues
+		setStringColumn(stmtInsertRow, 2, line, 7, 18);
 		
+		// Right Ascension
+		//
 		// The Henry Draper catalogue stores RA as hours and deci-minutes
 		double raHours = getFieldAsDouble(line, 19, 20);
 		double raDeciMinutes = getFieldAsDouble(line, 21, 23);
 		
 		stmtInsertRow.setDouble(3, raHours+raDeciMinutes/600.0);
 		
-		setDoubleColumnFromDMS(stmtInsertRow, 4, line, 24, 25, 26, 27, 28, -1, -1);      // Dec
+		// Declination
+		setDoubleColumnFromDMS(stmtInsertRow, 4, line, 24, 25, 26, 27, 28, -1, -1);
 		
+		// Photovisual magnitude
 		double pv_mag = getFieldAsDouble(line, 30, 34);
 		
 		if (Double.isNaN(pv_mag))
@@ -47,14 +53,23 @@ public class HenryDraperLoader extends AbstractCatalogueLoader {
 		else
 			stmtInsertRow.setDouble(5, pv_mag);
 		
+		// Photographic magnitude
 		double pt_mag =  getFieldAsDouble(line, 37, 41);
 		
-		if (Double.isNaN(pt_mag) || (pt_mag == 0.0 && pv_mag > 6.0))
+		// Some stars have pt_mag < 2.0 and pv_mag > 8.0, which is clearly impossible, so
+		// we reset pt_mag to NaN for these stars to force the value to be NULL in the
+		// database.
+		
+		if (pt_mag < 2.0 && (Double.isNaN(pv_mag) || pv_mag > 6.0))
+			pt_mag = Double.NaN;
+		
+		if (Double.isNaN(pt_mag))
 			stmtInsertRow.setNull(6, java.sql.Types.DOUBLE);
 		else
 			stmtInsertRow.setDouble(6, pt_mag);
 		
-		setStringColumn(stmtInsertRow, 7, line, 43, 45);      // Spectral type
+		// Spectral type
+		setStringColumn(stmtInsertRow, 7, line, 43, 45);
 
 		stmtInsertRow.execute();
 	}	
