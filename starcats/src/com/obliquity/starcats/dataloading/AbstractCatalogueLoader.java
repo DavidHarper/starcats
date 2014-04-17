@@ -144,12 +144,12 @@ public abstract class AbstractCatalogueLoader {
 	}
 	
 	protected void setDoubleColumn(PreparedStatement stmt, int index, String line, int startPos, int endPos) throws SQLException {
-		String field = getField(line, startPos, endPos);
+		double value = getFieldAsDouble(line, startPos, endPos);
 		
-		if (field == null) {
+		if (value == Double.NaN) {
 			stmt.setNull(index, java.sql.Types.DOUBLE);
 		} else {
-			stmt.setDouble(index, Double.parseDouble(field));
+			stmt.setDouble(index, value);
 		}
 	}	
 	
@@ -203,6 +203,11 @@ public abstract class AbstractCatalogueLoader {
 		if (field == null)
 			return Double.NaN;
 		
-		return Double.parseDouble(field);
+		try {
+			return Double.parseDouble(field);
+		}
+		catch (NumberFormatException e) {
+			return Double.NaN;
+		}
 	}
 }
