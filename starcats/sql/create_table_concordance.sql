@@ -9,5 +9,6 @@ create table concordance (
     v_mag float,
     flamsteed smallint unsigned,
     bayer varchar(5),
-    constellation char(3)
+    constellation char(3),
+    index (hd_id)
 ) engine=InnoDB
