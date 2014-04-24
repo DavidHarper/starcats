@@ -1,5 +1,8 @@
 package com.obliquity.starcats.dataloading;
 
+// Tycho-2 Supplement 1 catalogue
+// http://cdsarc.u-strasbg.fr/viz-bin/Cat?I/259
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

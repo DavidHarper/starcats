@@ -1,5 +1,8 @@
 package com.obliquity.starcats.dataloading;
 
+// Yale Bright Star Catalogue
+// http://vizier.u-strasbg.fr/viz-bin/VizieR?-source=V/50
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

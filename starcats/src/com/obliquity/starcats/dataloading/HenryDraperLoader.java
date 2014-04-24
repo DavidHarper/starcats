@@ -1,5 +1,8 @@
 package com.obliquity.starcats.dataloading;
 
+// Henry Draper catalogue
+// http://vizier.u-strasbg.fr/viz-bin/VizieR?-source=III/135
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

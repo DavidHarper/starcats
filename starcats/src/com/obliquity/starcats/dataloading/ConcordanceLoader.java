@@ -1,5 +1,8 @@
 package com.obliquity.starcats.dataloading;
 
+// HD-DM-GC-HR-HIP-Bayer-Flamsteed Cross Index
+// http://cdsarc.u-strasbg.fr/viz-bin/Cat?IV/27A
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
