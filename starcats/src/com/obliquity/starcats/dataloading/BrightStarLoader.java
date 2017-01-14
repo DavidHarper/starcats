@@ -72,9 +72,10 @@ public class BrightStarLoader extends AbstractCatalogueLoader {
 			stmtInsertRow.execute();
 		}
 		catch (SQLException e) {
-			if (e.getErrorCode() == ER_BAD_NULL_RECORD)
+			if (e.getErrorCode() == ER_BAD_NULL_RECORD) {
 				System.err.println(e.getMessage());
-			else
+				System.err.println("# " + line);
+			} else
 				throw new SQLException(e);
 		}
 	}
