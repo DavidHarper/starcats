@@ -4,6 +4,8 @@ public class Precession {
 	// Reference: Explanatory Supplement to the Astronomical Almanac (1992), pages 103-104
 	
 	public static final double J2000 = 2451545.0;
+	public static final double B1950 = 2433282.4235;
+	public static final double B1900 = 2415020.3135;
 	
 	private static double SECONDS_TO_RADIANS = Math.PI/(180.0 * 3600.0);
 	
