@@ -11,7 +11,11 @@ public class Precession {
 	
 	private double P[][] = new double[3][3];
 	
-	protected void calculateAngles(double fixedEpoch, double epochOfDate) {
+	public Precession(double fixedEpoch, double epochOfDate) {
+		calculateMatrix(fixedEpoch, epochOfDate);
+	}
+	
+	private void calculateAngles(double fixedEpoch, double epochOfDate) {
 		double T = (fixedEpoch - J2000)/36525.0;
 		double t = (epochOfDate - fixedEpoch)/36525.0;
 		
@@ -28,7 +32,7 @@ public class Precession {
 		theta *= SECONDS_TO_RADIANS;
 	}
 	
-	protected double[][] calculateMatrix(double fixedEpoch, double epochOfDate) {
+	private void calculateMatrix(double fixedEpoch, double epochOfDate) {
 		calculateAngles(fixedEpoch, epochOfDate);
 		
 		double cosZeta = Math.cos(zeta);
@@ -51,15 +55,11 @@ public class Precession {
 		P[2][0] = sinTheta * cosZeta;
 		P[2][1] = -sinTheta * sinZeta;
 		P[2][2] = cosTheta;
-		
-		return P;
 	}
 	
-	public void precess(double[] position, double fixedEpoch, double epochOfDate) {
+	public void precess(double[] position) {
 		if (position.length < 2)
 			throw new IllegalArgumentException("Expected an array of at least two doubles");
-		
-		double[][] M = calculateMatrix(fixedEpoch, epochOfDate);
 		
 		double[] V1 = new double[3];
 		double[] V2 = new double[3];
@@ -72,7 +72,7 @@ public class Precession {
 			V2[i] = 0.0;
 			
 			for (int j = 0; j < 3; j++)
-				V2[i] += M[i][j] * V1[j];
+				V2[i] += P[i][j] * V1[j];
 		}
 		
 		position[0] = Math.atan2(V2[1], V2[0]);
@@ -93,14 +93,14 @@ public class Precession {
 		double fixedEpoch = Double.parseDouble(args[2]);
 		double epochOfDate = Double.parseDouble(args[3]);
 		
-		Precession p = new Precession();
+		Precession p = new Precession(fixedEpoch, epochOfDate);
 
 		double[] position = new double[2];
 		
 		position[0] = RA;
 		position[1] = dec;
 		
-		p.precess(position, fixedEpoch, epochOfDate);
+		p.precess(position);
 		
 		System.out.println("RA:  " + position[0] + "\nDec: " + position[1]);
 	}
