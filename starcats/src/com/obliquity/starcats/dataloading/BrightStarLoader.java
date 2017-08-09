@@ -2,6 +2,7 @@ package com.obliquity.starcats.dataloading;
 
 // Yale Bright Star Catalogue
 // http://vizier.u-strasbg.fr/viz-bin/VizieR?-source=V/50
+// ftp://cdsarc.u-strasbg.fr/pub/cats/V/50/catalog.gz
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

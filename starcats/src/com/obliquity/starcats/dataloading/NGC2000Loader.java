@@ -2,6 +2,7 @@ package com.obliquity.starcats.dataloading;
 
 // NGC2000 catalogue of non-stellar objects
 // http://cdsarc.u-strasbg.fr/viz-bin/Cat?VII/118
+// ftp://cdsarc.u-strasbg.fr/pub/cats/VII/118/ngc2000.dat
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

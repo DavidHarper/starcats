@@ -2,6 +2,7 @@ package com.obliquity.starcats.dataloading;
 
 // Tycho-2 Supplement 1 catalogue
 // http://cdsarc.u-strasbg.fr/viz-bin/Cat?I/259
+// ftp://cdsarc.u-strasbg.fr/pub/cats/I/259/suppl_1.dat.gz
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

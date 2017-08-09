@@ -2,6 +2,7 @@ package com.obliquity.starcats.dataloading;
 
 // Henry Draper catalogue
 // http://vizier.u-strasbg.fr/viz-bin/VizieR?-source=III/135
+// ftp://cdsarc.u-strasbg.fr/pub/cats/III/135A/catalog.dat.gz
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
