@@ -9,6 +9,10 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class BrightStarLoader extends AbstractCatalogueLoader {
+	private static final String SOURCE_URL = "ftp://cdsarc.u-strasbg.fr/pub/cats/V/50/catalog.gz";
+	
+	private static final String sources[] = { SOURCE_URL };
+	
 	private PreparedStatement stmtInsertRow;
 	
 	private static final int ER_BAD_NULL_RECORD = 1048;
@@ -17,7 +21,7 @@ public class BrightStarLoader extends AbstractCatalogueLoader {
 		try {
 			BrightStarLoader loader = new BrightStarLoader();
 			
-			loader.run();
+			loader.run(args.length > 0 ? args : sources);
 		}
 		catch (Exception e) {
 			e.printStackTrace();

@@ -2,10 +2,12 @@ package com.obliquity.starcats.dataloading;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.io.BufferedReader;
-import java.io.FileReader;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,40 +15,20 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import java.util.Properties;
-
-import javax.swing.JFileChooser;
+import java.util.zip.GZIPInputStream;
 
 public abstract class AbstractCatalogueLoader {
 	protected Connection conn;
 	
 	private static final int LINES_PER_COMMIT = 1000;
 	
-	protected void run() throws ClassNotFoundException, SQLException, IOException {
+	protected void run(String[] sources) throws ClassNotFoundException, SQLException, IOException {
 		conn = getConnection("starcats");
 		
 		prepareSQLStatements(conn);
 		
-		JFileChooser chooser = new JFileChooser();
-		
-		chooser.setMultiSelectionEnabled(true);
-		
-		File cwd = new File(System.getProperty("starcats.base"));
-		chooser.setCurrentDirectory(cwd);
-
-		int returnVal = chooser.showOpenDialog(null);
-
-		if (returnVal == JFileChooser.APPROVE_OPTION) {
-			File[] files = chooser.getSelectedFiles();
-			
-			try {
-				load(files);
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-			}
-		} else
-			System.exit(1);
-		
+		load(sources);
+				
 		conn.close();
 	}
 	
@@ -86,19 +68,48 @@ public abstract class AbstractCatalogueLoader {
 	
 	protected abstract void prepareSQLStatements(Connection conn) throws SQLException;
 
-	public void load(File[] files) throws IOException, SQLException {
-		for (File file : files)
-			load(file);
+	public void load(String[] sources) throws IOException, SQLException {
+		for (String source : sources)
+			load(source);
 	}
 	
-	private int lineCount;
+	public void load(String source) throws IOException, SQLException {
+		System.out.println("Loading from source " + source);
+		
+		InputStream is = getInputStreamForSource(source);
+		
+		BufferedReader br = new BufferedReader(new InputStreamReader(is));
+		
+		load(br);
+		
+		is.close();
+	}
 	
-	public void load(File file) throws IOException, SQLException {
-		System.out.println("Loading file " + file.getName());
+	private InputStream getInputStreamForSource(String source) throws IOException {
+		return isURL(source) ? getInputStreamForURL(source) : getInputStreamForFilename(source);
+	}
+	
+	private boolean isURL(String source) {
+		return source.startsWith("file:") || source.startsWith("http:") || source.startsWith("https:") || source.startsWith("ftp:");
+	}
+	
+	private InputStream getInputStreamForURL(String source) throws IOException {
+		URL url = new URL(source);
+
+		InputStream is = url.openStream();
 		
-		BufferedReader br = new BufferedReader(new FileReader(file));
-		
-		lineCount = 0;
+		if (source.endsWith(".gz"))
+			is = new GZIPInputStream(is);
+
+		return is;
+	}
+	
+	private InputStream getInputStreamForFilename(String source) throws FileNotFoundException {
+		return new FileInputStream(source);
+	}
+	
+	public void load(BufferedReader br) throws IOException, SQLException {
+		int lineCount = 0;
 		
 		for (String line = br.readLine(); line != null; line = br.readLine()) {
 			lineCount++;

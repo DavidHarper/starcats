@@ -9,13 +9,17 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class HenryDraperLoader extends AbstractCatalogueLoader {
+	private static final String SOURCE_URL = "ftp://cdsarc.u-strasbg.fr/pub/cats/III/135A/catalog.dat.gz";
+	
+	private static final String sources[] = { SOURCE_URL };
+	
 	private PreparedStatement stmtInsertRow;
 	
 	public static void main(String[] args) {	
 		try {
 			HenryDraperLoader loader = new HenryDraperLoader();
 			
-			loader.run();
+			loader.run(args.length > 0 ? args : sources);
 		}
 		catch (Exception e) {
 			e.printStackTrace();

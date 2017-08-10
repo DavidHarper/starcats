@@ -7,15 +7,39 @@ package com.obliquity.starcats.dataloading;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Types;
 
 public class Tycho2Loader extends AbstractCatalogueLoader {
+	private static final String sources[] = { 
+			"ftp://cdsarc.u-strasbg.fr/pub/cats/I/259/tyc2.dat.00.gz",
+			"ftp://cdsarc.u-strasbg.fr/pub/cats/I/259/tyc2.dat.01.gz",
+			"ftp://cdsarc.u-strasbg.fr/pub/cats/I/259/tyc2.dat.02.gz",
+			"ftp://cdsarc.u-strasbg.fr/pub/cats/I/259/tyc2.dat.03.gz",
+			"ftp://cdsarc.u-strasbg.fr/pub/cats/I/259/tyc2.dat.04.gz",
+			"ftp://cdsarc.u-strasbg.fr/pub/cats/I/259/tyc2.dat.05.gz",
+			"ftp://cdsarc.u-strasbg.fr/pub/cats/I/259/tyc2.dat.06.gz",
+			"ftp://cdsarc.u-strasbg.fr/pub/cats/I/259/tyc2.dat.07.gz",
+			"ftp://cdsarc.u-strasbg.fr/pub/cats/I/259/tyc2.dat.08.gz",
+			"ftp://cdsarc.u-strasbg.fr/pub/cats/I/259/tyc2.dat.09.gz",
+			"ftp://cdsarc.u-strasbg.fr/pub/cats/I/259/tyc2.dat.10.gz",
+			"ftp://cdsarc.u-strasbg.fr/pub/cats/I/259/tyc2.dat.11.gz",
+			"ftp://cdsarc.u-strasbg.fr/pub/cats/I/259/tyc2.dat.12.gz",
+			"ftp://cdsarc.u-strasbg.fr/pub/cats/I/259/tyc2.dat.13.gz",
+			"ftp://cdsarc.u-strasbg.fr/pub/cats/I/259/tyc2.dat.14.gz",
+			"ftp://cdsarc.u-strasbg.fr/pub/cats/I/259/tyc2.dat.15.gz",
+			"ftp://cdsarc.u-strasbg.fr/pub/cats/I/259/tyc2.dat.16.gz",
+			"ftp://cdsarc.u-strasbg.fr/pub/cats/I/259/tyc2.dat.17.gz",
+			"ftp://cdsarc.u-strasbg.fr/pub/cats/I/259/tyc2.dat.18.gz",
+			"ftp://cdsarc.u-strasbg.fr/pub/cats/I/259/tyc2.dat.19.gz",
+	};
+
 	private PreparedStatement stmtInsertRow;
 	
 	public static void main(String[] args) {	
 		try {
 			Tycho2Loader loader = new Tycho2Loader();
 			
-			loader.run();
+			loader.run(args.length > 0 ? args : sources);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -37,8 +61,17 @@ public class Tycho2Loader extends AbstractCatalogueLoader {
 		setIntegerColumn(stmtInsertRow, 2, line, 6, 10);      // TYC2
 		setIntegerColumn(stmtInsertRow, 3, line, 12, 12);     // TYC3
 		
-		setDoubleColumn(stmtInsertRow, 4, line, 16, 27);      // RAmdeg
-		setDoubleColumn(stmtInsertRow, 5, line, 29, 40);      // DEmdeg
+		boolean hasMeanPosition = line.charAt(13) != 'X';
+		
+		if (hasMeanPosition)
+			setDoubleColumn(stmtInsertRow, 4, line, 16, 27);      // RAmdeg
+		else
+			stmtInsertRow.setNull(4, Types.DOUBLE);
+		
+		if (hasMeanPosition)
+			setDoubleColumn(stmtInsertRow, 5, line, 29, 40);      // DEmdeg
+		else
+			stmtInsertRow.setNull(5, Types.DOUBLE);
 		
 		setFloatColumn(stmtInsertRow, 6, line, 42, 48);       // pmRA
 		setFloatColumn(stmtInsertRow, 7, line, 50, 56);       // pmDE

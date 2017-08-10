@@ -9,6 +9,10 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class Tycho2SupplementLoader extends AbstractCatalogueLoader {
+	private static final String SOURCE_URL = "ftp://cdsarc.u-strasbg.fr/pub/cats/I/259/suppl_1.dat.gz";
+	
+	private static final String sources[] = { SOURCE_URL };
+	
 	private PreparedStatement stmtInsertRow;
 	
 	private static final int ER_DUP_ENTRY = 1062;
@@ -17,7 +21,7 @@ public class Tycho2SupplementLoader extends AbstractCatalogueLoader {
 		try {
 			Tycho2SupplementLoader loader = new Tycho2SupplementLoader();
 			
-			loader.run();
+			loader.run(args.length > 0 ? args : sources);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
