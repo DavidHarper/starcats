@@ -48,10 +48,12 @@ public class SAO2000Loader extends AbstractCatalogueLoader {
 		setIntegerColumn(stmtInsertRow, 2, line, 118, 123);
 				
 		// Right Ascension (J2000)
-		setDoubleColumn(stmtInsertRow, 3, line, 184, 193);
+		double ra = getFieldAsDouble(line, 184, 193) * 12.0/Math.PI;
+		stmtInsertRow.setDouble(3, ra);
 		
 		// Declination
-		setDoubleColumn(stmtInsertRow, 4, line, 194, 204);
+		double dec = getFieldAsDouble(line, 194, 204) * 180.0/Math.PI;
+		stmtInsertRow.setDouble(4, dec);
 		
 		// Visual magnitude
 		double v_mag = getFieldAsDouble(line, 81, 84);
