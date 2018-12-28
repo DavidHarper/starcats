@@ -18,6 +18,6 @@ create table tycho2 (
        se_ra float,
        se_dec float,
        unique key (tyc1, tyc2, tyc3),
-       key (ra),
+       key (ra_mean),
        key (vt_mag)
 ) engine=innodb;
