@@ -50,8 +50,8 @@ public class Tycho2Loader extends AbstractCatalogueLoader {
 	
 	protected void prepareSQLStatements(Connection conn) throws SQLException {
 		String sql = "insert into tycho2 (tyc1,tyc2,tyc3,ra_mean,dec_mean,pm_ra,pm_dec,se_ra_mean,se_dec_mean," +
-				"bt_mag,se_bt_mag,vt_mag,se_vt_mag,hip_id,ra,`dec`,se_ra,se_dec)" +
-				"VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				"bt_mag,se_bt_mag,vt_mag,se_vt_mag,hip_id,ra,`dec`,epochRA,epochDec,se_ra,se_dec)" +
+				"VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		
 		stmtInsertRow = conn.prepareStatement(sql);
 	}
@@ -90,8 +90,11 @@ public class Tycho2Loader extends AbstractCatalogueLoader {
 		setDoubleColumn(stmtInsertRow, 15, line, 153, 164);   // RAdeg
 		setDoubleColumn(stmtInsertRow, 16, line, 166,177);    // DEdeg
 		
-		setFloatColumn(stmtInsertRow, 17, line, 179, 182);    // e_RAdeg
-		setFloatColumn(stmtInsertRow, 18, line, 184, 187);    // e_DEdeg
+		setFloatColumn(stmtInsertRow, 17, line, 179, 182);    // epRA
+		setFloatColumn(stmtInsertRow, 18, line, 184, 187);    // epDec
+		
+		setFloatColumn(stmtInsertRow, 19, line, 189, 193);    // e_RAdeg
+		setFloatColumn(stmtInsertRow, 20, line, 195, 199);    // e_DEdeg
 	
 		stmtInsertRow.execute();
 	}	

@@ -15,6 +15,8 @@ create table tycho2 (
        hip_id int unsigned,
        ra double not null,
        `dec` double not null,
+       epochRA float,
+       epochDec float,
        se_ra float,
        se_dec float,
        unique key (tyc1, tyc2, tyc3),
