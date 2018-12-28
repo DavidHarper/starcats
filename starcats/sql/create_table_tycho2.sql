@@ -19,6 +19,8 @@ create table tycho2 (
        epochDec float,
        se_ra float,
        se_dec float,
+       vmag float generated always as (vt_mag - 0.090 * (bt_mag-vt_mag)) virtual,
+       bv_colour float generated always as (0.850*(bt_mag-vt_mag)) virtual,
        unique key (tyc1, tyc2, tyc3),
        key (ra_mean),
        key (vt_mag)
