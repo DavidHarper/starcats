@@ -22,7 +22,7 @@
  * the archive of this library for complete text of license.
  */
 
-package com.obliquity.starcats.dataloading;
+package com.obliquity.astronomy.starcats.dataloading;
 
 // Tycho-2 catalogue
 // http://cdsarc.u-strasbg.fr/viz-bin/Cat?cat=I%2F259

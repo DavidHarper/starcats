@@ -22,7 +22,7 @@
  * the archive of this library for complete text of license.
  */
 
-package com.obliquity.starcats.dataloading;
+package com.obliquity.astronomy.starcats.dataloading;
 
 // SAO2000 catalogue
 // http://cdsarc.u-strasbg.fr/viz-bin/Cat?I/131A

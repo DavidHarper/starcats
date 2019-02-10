@@ -22,7 +22,7 @@
  * the archive of this library for complete text of license.
  */
 
-package com.obliquity.starcats.dataloading;
+package com.obliquity.astronomy.starcats.dataloading;
 
 // Hipparcos 2 catalogue
 // van Leeuwen, F. et al (2007) A&A 474, 653

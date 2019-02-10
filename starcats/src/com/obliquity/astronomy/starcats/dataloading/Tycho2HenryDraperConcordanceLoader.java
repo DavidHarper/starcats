@@ -22,7 +22,7 @@
  * the archive of this library for complete text of license.
  */
 
-package com.obliquity.starcats.dataloading;
+package com.obliquity.astronomy.starcats.dataloading;
 
 // Tycho-2 to Henry Draper concordance
 // Fabricius, C., et al (2002), A&A 386, 709

@@ -22,7 +22,7 @@
  * the archive of this library for complete text of license.
  */
 
-package com.obliquity.starcats.util;
+package com.obliquity.astronomy.starcats.util;
 
 public class Precession {
 	// Reference: Explanatory Supplement to the Astronomical Almanac (1992), pages 103-104

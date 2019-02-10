@@ -22,7 +22,7 @@
  * the archive of this library for complete text of license.
  */
 
-package com.obliquity.starcats.dataloading;
+package com.obliquity.astronomy.starcats.dataloading;
 
 // Yale Bright Star Catalogue
 // http://vizier.u-strasbg.fr/viz-bin/VizieR?-source=V/50
