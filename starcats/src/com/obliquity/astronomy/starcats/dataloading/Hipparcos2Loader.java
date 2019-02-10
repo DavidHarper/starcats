@@ -25,7 +25,7 @@
 package com.obliquity.astronomy.starcats.dataloading;
 
 // Hipparcos 2 catalogue
-// van Leeuwen, F. et al (2007) A&A 474, 653
+// van Leeuwen, F. et al (2007) "Validation of the new Hipparcos reduction" A&A 474, 653
 // doi:10.1051/0004-6361:20078357
 // http://cdsarc.u-strasbg.fr/viz-bin/cat/I/311
 // http://cdsarc.u-strasbg.fr/ftp/I/311/hip2.dat.gz
