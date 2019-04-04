@@ -73,10 +73,12 @@ public abstract class AbstractCatalogueLoader {
 		String host = myprops.getProperty(prefix + ".host");
 		String port = myprops.getProperty(prefix + ".port");
 		String database = myprops.getProperty(prefix + ".database");
+		
+		String dbtype = myprops.getProperty(prefix + ".dbtype", "mysql");
 
-		String url = "jdbc:mysql://" + host + ":" + port + "/" + database;
+		String url = "jdbc:" + dbtype + "://" + host + ":" + port + "/" + database;
 
-		String driver = "com.mysql.jdbc.Driver";
+		String driver = myprops.getProperty(prefix + ".driver", "com.mysql.jdbc.Driver");
 
 		String username = myprops.getProperty(prefix + ".username");
 		String password = myprops.getProperty(prefix + ".password");
