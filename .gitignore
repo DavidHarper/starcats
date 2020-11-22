@@ -3,3 +3,5 @@ classes
 *~
 *.class
 *.props
+.gradle
+build

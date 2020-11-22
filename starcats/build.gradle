@@ -1,0 +1,37 @@
+apply plugin: 'java'
+apply plugin: 'maven-publish'
+
+version = '2.0'
+
+group = 'com.obliquity.astronomy'
+
+sourceCompatibility = 1.8
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.obliquity.astronomy.starcats.dataloading.BrightStarLoader'
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'mysql:mysql-connector-java:5.1.49'
+}
+
+publishing {
+    publications {
+        myLibrary(MavenPublication) {
+            from components.java
+        }
+    }
+
+    repositories {
+        maven {
+            name = 'myRepo'
+            url = "file://${buildDir}/repo"
+        }
+    }
+}
