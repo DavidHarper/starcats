@@ -35,3 +35,12 @@ publishing {
         }
     }
 }
+
+task extlibs(type: Copy) {
+  group 'distribution'
+  description 'Imports external JAR dependencies.'
+  from configurations.runtimeClasspath.findAll { it.name.endsWith('jar') }
+  into "$buildDir/extlibs"
+}
+
+build.dependsOn extlibs
