@@ -77,6 +77,11 @@ public abstract class AbstractCatalogueLoader {
 		String dbtype = myprops.getProperty(prefix + ".dbtype", "mysql");
 
 		String url = "jdbc:" + dbtype + "://" + host + ":" + port + "/" + database;
+		
+		String options = myprops.getProperty(prefix + ".options");
+		
+		if (options != null)
+			url += "?" + options;
 
 		String driver = myprops.getProperty(prefix + ".driver", "com.mysql.jdbc.Driver");
 
@@ -139,8 +144,14 @@ public abstract class AbstractCatalogueLoader {
 		
 		for (String line = br.readLine(); line != null; line = br.readLine()) {
 			lineCount++;
-						
-			processLine(line);
+					
+			try {
+				processLine(line);
+			}
+			catch (SQLException e) {
+				System.err.println("An error occurred at line " + lineCount + " : " + e.getMessage());
+				throw e;
+			}
 			
 			if ((lineCount % 1000) == 0)
 				System.out.println(" " + lineCount);
@@ -183,7 +194,7 @@ public abstract class AbstractCatalogueLoader {
 	protected void setDoubleColumn(PreparedStatement stmt, int index, String line, int startPos, int endPos) throws SQLException {
 		double value = getFieldAsDouble(line, startPos, endPos);
 		
-		if (value == Double.NaN) {
+		if (Double.isNaN(value)) {
 			stmt.setNull(index, java.sql.Types.DOUBLE);
 		} else {
 			stmt.setDouble(index, value);
