@@ -53,8 +53,8 @@ public class SAO2000Loader extends AbstractCatalogueLoader {
 	}
 	
 	protected void prepareSQLStatements(Connection conn) throws SQLException {
-		String sql = "insert into sao2000 (sao_id, hd_id, ra, `dec`, v_mag, p_mag, spectral_type)" +
-				"VALUES(?,?,?,?,?,?,?)";
+		String sql = "insert into sao2000 (sao_id, hd_id, ra2000, dec2000, v_mag, p_mag, spectral_type, pmRA2000, pmDec2000)" +
+				"VALUES(?,?,?,?,?,?,?,?,?)";
 		
 		stmtInsertRow = conn.prepareStatement(sql);
 	}
@@ -72,12 +72,10 @@ public class SAO2000Loader extends AbstractCatalogueLoader {
 		setIntegerColumn(stmtInsertRow, 2, line, 118, 123);
 				
 		// Right Ascension (J2000)
-		double ra = getFieldAsDouble(line, 184, 193) * 12.0/Math.PI;
-		stmtInsertRow.setDouble(3, ra);
+		setDoubleColumnFromDMS(stmtInsertRow, 3, line, -1, 151, 152, 153, 154, 155, 160);
 		
-		// Declination
-		double dec = getFieldAsDouble(line, 194, 204) * 180.0/Math.PI;
-		stmtInsertRow.setDouble(4, dec);
+		// Declination (J2000)
+		setDoubleColumnFromDMS(stmtInsertRow, 4, line, 168, 169, 170, 171, 172, 173, 177);
 		
 		// Visual magnitude
 		double v_mag = getFieldAsDouble(line, 81, 84);
@@ -97,7 +95,23 @@ public class SAO2000Loader extends AbstractCatalogueLoader {
 		
 		// Spectral type
 		setStringColumn(stmtInsertRow, 7, line, 85, 87);
-
+		
+		// Proper motion in RA (J2000)
+		double pmRA2000 = getFieldAsDouble(line, 161, 167);
+		
+		if (Double.isNaN(pmRA2000))
+			stmtInsertRow.setNull(8, java.sql.Types.DOUBLE);
+		else
+			stmtInsertRow.setDouble(8, pmRA2000);
+		
+		// Proper motion in Dec (J2000)
+		double pmDec2000 = getFieldAsDouble(line, 178, 183);
+		
+		if (Double.isNaN(pmDec2000))
+			stmtInsertRow.setNull(9, java.sql.Types.DOUBLE);
+		else
+			stmtInsertRow.setDouble(9, pmDec2000);
+		
 		stmtInsertRow.execute();
 	}	
 
