@@ -54,8 +54,8 @@ public class XZZodiacalStarsLoader extends AbstractCatalogueLoader {
 	}
 
 	protected void prepareSQLStatements(Connection conn) throws SQLException {
-		String sql = "insert into xz_zodiacal (xz_id,ra,`dec`,pm_ra,pm_dec,v_mag,zc_id,hd_id)" +
-				"VALUES(?,?,?,?,?,?,?,?)";
+		String sql = "insert into xz_zodiacal (xz_id,ra,`dec`,pm_ra,pm_dec,v_mag,parallax,rv,zc_id,hd_id)" +
+				"VALUES(?,?,?,?,?,?,?,?,?,?)";
 		
 		stmtInsertRow = conn.prepareStatement(sql);
 	}
@@ -78,9 +78,13 @@ public class XZZodiacalStarsLoader extends AbstractCatalogueLoader {
 		
 		setDoubleColumn(stmtInsertRow, 6, line, 20, 24);
 		
-		setIntegerColumn(stmtInsertRow, 7, line, 148,151);
+		setDoubleColumn(stmtInsertRow, 7, line, 64, 66);
 		
-		setIntegerColumn(stmtInsertRow, 8, line, 167, 172);
+		setDoubleColumn(stmtInsertRow, 8, line, 68, 73);
+		
+		setIntegerColumn(stmtInsertRow, 9, line, 148,151);
+		
+		setIntegerColumn(stmtInsertRow, 10, line, 167, 172);
 		
 		stmtInsertRow.execute();
 	}
