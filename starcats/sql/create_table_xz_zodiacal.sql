@@ -30,9 +30,11 @@ create table xz_zodiacal (
   parallax double default 0.0,
   rv double default 0.0,
   zc_id int unsigned,
+  sao_id int unsigned,
   hd_id int unsigned,
   key (ra),
   key (v_mag, ra),
   key (zc_id),
+  key (sao_id),
   key (hd_id)
 ) engine=InnoDB
