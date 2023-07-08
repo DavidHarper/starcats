@@ -1,4 +1,4 @@
-- starcats - a package for loading stars catalogues into a MySQL database.
+-- starcats - a package for loading stars catalogues into a MySQL database.
 --
 -- Copyright (C) 2016-2021 David Harper at obliquity.com
 -- 
@@ -35,4 +35,4 @@ create table xz_zodiacal (
   key (v_mag, ra),
   key (zc_id),
   key (hd_id)
-) enging=InnoDB
+) engine=InnoDB
