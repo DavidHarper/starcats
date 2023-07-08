@@ -63,7 +63,7 @@ public class XZZodiacalStarsLoader extends AbstractCatalogueLoader {
 	protected void processLine(String line) throws SQLException {
 		char code = line.charAt(6);
 		
-		if (code == 'L' || code == 'X' || code == 'E' || code == ' ')
+		if (code == 'L' || code == 'X' || code == 'E')
 			return;
 		
 		setIntegerColumn(stmtInsertRow, 1, line, 1, 6);
