@@ -27,6 +27,8 @@ create table xz_zodiacal (
   pm_ra double default 0.0,
   pm_dec double default 0.0,
   v_mag double default 99.9,
+  parallax double default 0.0,
+  rv double default 0.0,
   zc_id int unsigned,
   hd_id int unsigned,
   key (ra),
